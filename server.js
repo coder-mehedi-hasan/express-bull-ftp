@@ -4,7 +4,7 @@ const express = require('express')
 const serveIndex = require('serve-index')
 const upload = require('./upload')
 const app = express();
-const port = 3002;
+const port = 3001;
 const { JOBS } = require('./constant')
 const orderQueue = require('./order_queue');
 app.use(express.text());
@@ -29,7 +29,7 @@ app.get('/test', async (req, res) => {
 })
 
 app.use(
-  '/',
+  '/ftps',
   express.static('public/ftp'),
   serveIndex('public/ftp', { icons: true })
 )
