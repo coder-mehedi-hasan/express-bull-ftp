@@ -1,0 +1,6 @@
+githubuser=
+githubpass=
+repo=
+branch=main
+
+git pull "https://$githubuser:$githubpass@github.com/$githubuser/$repo.git" $branch

@@ -1,11 +1,10 @@
 const Queue = require('bull');
 const { JOBS } = require('./constant');
 const { redisConfig } = require('./redis.config');
-const fsProm = require("fs/promises")
 const orderQueue = new Queue(JOBS.order, redisConfig);
 const fs = require('fs');
 const { default: axios } = require('axios');
-const apiUrl = 'http://localhost:3001/profile';
+const apiUrl = 'http://localhost:4553/api/v1/save-order';
 
 
 orderQueue.process(JOBS.order, async (job, callback) => {
