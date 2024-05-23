@@ -8,10 +8,11 @@ const apiUrl = process.env.API_ORDER ?? 'http://localhost:4553/api/v1/save-order
 
 
 orderQueue.process(JOBS.order, async (job, callback) => {
-    try {
-        console.log('Processing job', job.id, job.data);
 
-        const content = job.data;
+    const content = job?.data?.body;
+    const callbackUrl = job?.data?.callbackUrl
+    try {
+
 
         // Specify the file path
         const filePath = 'order-hl7.txt';
@@ -39,7 +40,11 @@ orderQueue.process(JOBS.order, async (job, callback) => {
                     if (file) {
                         form.append("file", file);
                         const response = await axios.post(apiUrl, form)
-                        // console.log(response.data);
+                        console.log(response.data)
+                        if (response.status === 200 && callbackUrl) {
+                            // console.log(callback)
+                            const callback = await axios.post(callbackUrl,response?.data)
+                        }
                     }
                 }
 

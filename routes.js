@@ -5,12 +5,19 @@ const testQueue = require('./test_queue');
 
 module.exports = (app) => {
     app.post('/save-order', upload.single('file'), function (req, res, next) {
-        res.send("Upload successfully")
+        res.status(200).json({ success: true })
+    })
+
+    app.post('/order-callback', function (req, res) {
+        console.log("from callback", req?.body)
+        res.status(200).json(req?.body)
     })
 
     app.post('/upload-order', async (req, res) => {
-        const body = req.body
-        const job = await orderQueue.add(JOBS.order, body);
+        const body = req.body;
+        const callbackUrl = req?.headers?.callback_url
+        const job = await orderQueue.add(JOBS.order, { body, callbackUrl });
+        // console.log(req?.headers?.callback_url)
         res.send(job)
     })
 
