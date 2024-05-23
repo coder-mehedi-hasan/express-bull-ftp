@@ -1,5 +1,6 @@
 const JOBS = {
-    "order": "order"
+    "order": "order",
+    "test": "test"
 }
 
 module.exports = { JOBS }
